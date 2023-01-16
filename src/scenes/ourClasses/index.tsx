@@ -8,6 +8,10 @@ import image6 from "@/assets/image6.png";
 import { motion } from "framer-motion";
 import HText from "@/shared/HText";
 import Class from "./Class";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper";
+import "swiper/css";
+import "swiper/css/pagination";
 
 const classes: Array<ClassType> = [
   {
@@ -76,15 +80,38 @@ const OurClasses = ({ setSelectedPage }: Props) => {
           </div>
         </motion.div>
         <div className="mt-10 h-[353px] w-full overflow-x-auto overflow-y-hidden">
-          <ul className="w-[2800px] whitespace-nowrap">
-            {classes.map((item: ClassType, index) => (
-              <Class
-                key={`${item.name}-${index}`}
-                name={item.name}
-                description={item.description}
-                image={item.image}
-              />
-            ))}
+          <ul className=" whitespace-nowrap">
+            <Swiper
+              spaceBetween={20}
+              slidesPerView={1}
+              grabCursor={true}
+              modules={[Pagination]}
+              pagination={{ clickable: true }}
+              loop={true}
+              breakpoints={{
+                860: {
+                  width: 320,
+                  slidesPerView: 2,
+                },
+                861: {
+                  slidesPerView: 3,
+                },
+              }}
+              className=" pb-16 sm:pb-10"
+            >
+              {classes.map((item: ClassType, index) => (
+                <SwiperSlide
+                  key={`${item.name}-${index}`}
+                  className="flex justify-center"
+                >
+                  <Class
+                    name={item.name}
+                    description={item.description}
+                    image={item.image}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </ul>
         </div>
       </motion.div>
